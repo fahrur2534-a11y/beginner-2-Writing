@@ -1,128 +1,337 @@
-
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About My Family - Writing Exercise</title>
+<title>Beginner Writing Task - My Hobby</title>
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background:#f4f6f9;
-}
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 30px;
+        line-height: 1.6;
+    }
 
-.container{
-    background:white;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
-}
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 35px;
+        border-radius: 10px;
+        box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
 
-h1,h2{
-    color:#2c3e50;
-}
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+    }
 
-textarea{
-    width:100%;
-    min-height:120px;
-    padding:10px;
-    margin-top:10px;
-}
+    h2 {
+        color: #34495e;
+        margin-top: 30px;
+    }
 
-input{
-    padding:8px;
-    margin:5px;
-}
+    h3 {
+        color: #2c3e50;
+    }
 
-button{
-    background:#3498db;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:5px;
-    cursor:pointer;
-}
+    section {
+        margin-bottom: 30px;
+    }
 
-button:hover{
-    background:#2980b9;
-}
+    textarea {
+        width: 100%;
+        min-height: 250px;
+        padding: 15px;
+        font-size: 16px;
+        resize: vertical;
+        box-sizing: border-box;
+    }
 
-.correct{
-    color:green;
-    font-weight:bold;
-}
+    button {
+        margin-top: 15px;
+        padding: 12px 24px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 
-.wrong{
-    color:red;
-    font-weight:bold;
-}
+    button:hover {
+        background-color: #2980b9;
+    }
+
+    .success {
+        color: green;
+    }
+
+    .warning {
+        color: red;
+    }
+
+    .info {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    ul, ol {
+        padding-left: 25px;
+    }
+
+    #feedback {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-<hr>
+    <h1>BEGINNER WRITING TASK</h1>
 
-<h2>Part A: Fill in the blanks</h2>
+    <section>
 
-<p>1. Kelly lives in
-<input id="q1"></p>
+        <h2>Read the Text Below Carefully</h2>
 
-<p>2. Kelly's mother's name is
-<input id="q2"></p>
+        <h3>My Hobby</h3>
 
-<p>3. Kelly's father works in a
-<input id="q3"></p>
+        <p>
+            Everyone has a hobby that they enjoy doing in their free time.
+            Hobbies help people relax, learn new skills, and spend their
+            time in a positive way. Some people enjoy reading books,
+            while others like playing sports, cooking, drawing, or
+            listening to music.
+        </p>
 
-<p>4. Kelly's sister loves listening to
-<input id="q4"></p>
+        <p>
+            Having a hobby can make people happier and healthier.
+            It also helps them make new friends who share the same interests.
+        </p>
 
-<p>5. Brandy is a pet
-<input id="q5"></p>
+    </section>
 
-<button onclick="checkAnswers()">Check Answers</button>
+    <section>
 
-<p id="result"></p>
+        <h2>Writing Task</h2>
 
-<hr>
+        <p>
+            Write a paragraph of <strong>60–80 words</strong> about
+            <strong>your favorite hobby</strong>.
+        </p>
 
-<h2>Part B: Write About Your Family</h2>
+        <p><strong>In your writing, you should:</strong></p>
 
-<p>Write 5–8 sentences about your family.</p>
+        <ol>
+            <li>State what your hobby is.</li>
+            <li>Explain why you like this hobby.</li>
+            <li>Describe how often you do it.</li>
+            <li>Mention one benefit of having this hobby.</li>
+        </ol>
 
-<textarea placeholder="My name is..."></textarea>
+    </section>
+
+    <section>
+
+        <h2>Assessment Criteria</h2>
+
+        <ul>
+            <li>Relevance of ideas</li>
+            <li>Simple organization</li>
+            <li>Basic vocabulary use</li>
+            <li>Grammatical accuracy</li>
+            <li>Spelling and punctuation</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>Your Writing</h2>
+
+        <textarea id="writing"
+        placeholder="Write your paragraph here..."></textarea>
+
+        <div class="info">
+            Word Count: <span id="wordCount">0</span>
+        </div>
+
+        <button onclick="evaluateWriting()">
+            Evaluate Writing
+        </button>
+
+    </section>
+
+    <section id="feedback"></section>
 
 </div>
 
 <script>
-function checkAnswers(){
 
-let score = 0;
+const writing = document.getElementById("writing");
+const counter = document.getElementById("wordCount");
 
-const answers = {
-q1:"california",
-q2:"carmen",
-q3:"bank",
-q4:"music",
-q5:"dog"
-};
+writing.addEventListener("input", updateCount);
 
-for(let id in answers){
-let user = document.getElementById(id).value.trim().toLowerCase();
+function updateCount() {
 
-if(user === answers[id]){
-score++;
-}
+    const words = writing.value
+        .trim()
+        .split(/\s+/)
+        .filter(word => word !== "");
+
+    counter.textContent =
+        writing.value.trim() === "" ? 0 : words.length;
 }
 
-document.getElementById("result").innerHTML =
-"You got " + score + " out of 5 correct!";
+function evaluateWriting() {
+
+    const text = writing.value.toLowerCase();
+
+    const words = text
+        .trim()
+        .split(/\s+/)
+        .filter(word => word !== "");
+
+    const wordCount = words.length;
+
+    let feedback = "<h2>Writing Evaluation</h2><ul>";
+
+    /* Word Count */
+
+    if (wordCount >= 60 && wordCount <= 80) {
+
+        feedback +=
+        "<li class='success'>✓ Word count requirement met (60–80 words).</li>";
+
+    } else {
+
+        feedback +=
+        "<li class='warning'>✗ Your paragraph should contain 60–80 words.</li>";
+    }
+
+    /* Hobby */
+
+    const hobbies = [
+        "reading",
+        "playing football",
+        "drawing",
+        "cooking",
+        "singing",
+        "dancing",
+        "swimming",
+        "cycling",
+        "listening to music",
+        "gaming"
+    ];
+
+    let hobbyFound = false;
+
+    hobbies.forEach(word => {
+
+        if (text.includes(word)) {
+
+            hobbyFound = true;
+        }
+    });
+
+    if (hobbyFound) {
+
+        feedback +=
+        "<li class='success'>✓ You mentioned your hobby.</li>";
+
+    } else {
+
+        feedback +=
+        "<li class='warning'>✗ State what your hobby is.</li>";
+    }
+
+    /* Reason */
+
+    if (
+        text.includes("because") ||
+        text.includes("i like") ||
+        text.includes("i enjoy")
+    ) {
+
+        feedback +=
+        "<li class='success'>✓ You explained why you like the hobby.</li>";
+
+    } else {
+
+        feedback +=
+        "<li class='warning'>✗ Explain why you like your hobby.</li>";
+    }
+
+    /* Frequency */
+
+    if (
+        text.includes("every day") ||
+        text.includes("every weekend") ||
+        text.includes("often") ||
+        text.includes("usually") ||
+        text.includes("sometimes") ||
+        text.includes("twice a week")
+    ) {
+
+        feedback +=
+        "<li class='success'>✓ You described how often you do the hobby.</li>";
+
+    } else {
+
+        feedback +=
+        "<li class='warning'>✗ Describe how often you do your hobby.</li>";
+    }
+
+    /* Benefit */
+
+    const benefits = [
+        "healthy",
+        "happy",
+        "relaxed",
+        "new friends",
+        "creative",
+        "learn",
+        "skills",
+        "confidence"
+    ];
+
+    let benefitFound = false;
+
+    benefits.forEach(word => {
+
+        if (text.includes(word)) {
+
+            benefitFound = true;
+        }
+    });
+
+    if (benefitFound) {
+
+        feedback +=
+        "<li class='success'>✓ You mentioned a benefit of the hobby.</li>";
+
+    } else {
+
+        feedback +=
+        "<li class='warning'>✗ Mention one benefit of having this hobby.</li>";
+    }
+
+    feedback += "</ul>";
+
+    document.getElementById("feedback").innerHTML = feedback;
 }
+
 </script>
 
 </body>
 </html>
+```
